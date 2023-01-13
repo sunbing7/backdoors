@@ -128,6 +128,7 @@ model = load_model(MNISTNet, 'mnist_bd.pt')
 
 # Modify test data to test backdoor accuracy
 backdoor_test_dataset = datasets.MNIST('../data', train=False, transform=transform)
+print('test data len: {}'.format(len(backdoor_test_dataset.data)))
 for i in range(len(backdoor_test_dataset.data)):
     backdoor_test_dataset.data[i][25][25] = 255
     backdoor_test_dataset.data[i][26][26] = 255
