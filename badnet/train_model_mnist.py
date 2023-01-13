@@ -13,6 +13,9 @@ from torchvision import datasets, transforms
 
 import random
 
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+print(device)
+
 class MNISTNet(nn.Module):
     def __init__(self):
         super().__init__()
@@ -86,8 +89,7 @@ def test(model, dataloader, loss_fn, device):
     print('Test Result: Accuracy @ {:.2f}%, Avg loss @ {:.4f}\n'.format(100 * correct, loss))
 
 
-device = 'cuda' if torch.cuda.is_available() else 'cpu'
-print(device)
+
 train_kwargs = {'batch_size': 100}
 test_kwargs = {'batch_size': 1000}
 transform = transforms.ToTensor()
