@@ -140,3 +140,8 @@ for i in range(len(backdoor_test_dataset.data)):
 print('With backdoored data')
 backdoor_test_loader = torch.utils.data.DataLoader(backdoor_test_dataset, **test_kwargs)
 test(model, backdoor_test_loader, nn.CrossEntropyLoss(), device)
+
+clean_test_dataset = datasets.MNIST('../data', train=False, transform=transform)
+print('Clean data')
+clean_test_loader = torch.utils.data.DataLoader(clean_test_dataset, **test_kwargs)
+test(model, clean_test_loader, nn.CrossEntropyLoss(), device)
