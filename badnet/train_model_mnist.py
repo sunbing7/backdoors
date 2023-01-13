@@ -87,6 +87,7 @@ def test(model, dataloader, loss_fn, device):
 
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
+print(device)
 train_kwargs = {'batch_size': 100}
 test_kwargs = {'batch_size': 1000}
 transform = transforms.ToTensor()
