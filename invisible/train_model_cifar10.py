@@ -137,7 +137,7 @@ for i in backdoor_indexes:
 
 train_loader = torch.utils.data.DataLoader(train_dataset, **train_kwargs)
 test_loader = torch.utils.data.DataLoader(test_dataset, **test_kwargs)
-
+'''
 model = resnet18().to(device)
 
 optimizer = optim.Adam(model.parameters(), lr=0.001)
@@ -149,7 +149,7 @@ for epoch in range(num_of_epochs):
     test(model, test_loader, nn.CrossEntropyLoss(), device)
 
 save_model(model, 'cifar10_resnet18_bd.pt')
-
+'''
 model = load_model(resnet18, 'cifar10_resnet18_bd.pt')
 model.to(device)
 # Modify test data to test backdoor accuracy
