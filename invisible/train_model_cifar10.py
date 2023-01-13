@@ -118,6 +118,7 @@ def test(model, dataloader, loss_fn, device):
 
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
+print(device)
 train_kwargs = {'batch_size': 100}
 test_kwargs = {'batch_size': 1000}
 transform = transforms.ToTensor()
@@ -148,7 +149,7 @@ test_loader = torch.utils.data.DataLoader(test_dataset, **test_kwargs)
 # save_model(model, 'cifar10_bd.pt')
 
 model = load_model(CIFAR10Net, 'cifar10_bd.pt')
-
+model.to(device)
 # Modify test data to test backdoor accuracy
 backdoor_test_dataset = datasets.CIFAR10('../data', train=False, transform=transform)
 for i in range(len(backdoor_test_dataset.data)):
@@ -158,3 +159,9 @@ for i in range(len(backdoor_test_dataset.data)):
 print('With backdoored data')
 backdoor_test_loader = torch.utils.data.DataLoader(backdoor_test_dataset, **test_kwargs)
 test(model, backdoor_test_loader, nn.CrossEntropyLoss(), device)
+
+
+clean_test_dataset = datasets.CIFAR10('../data', train=False, transform=transform)
+print('Clean data')
+clean_test_loader = torch.utils.data.DataLoader(clean_test_dataset, **test_kwargs)
+test(model, clean_test_loader, nn.CrossEntropyLoss(), device)
