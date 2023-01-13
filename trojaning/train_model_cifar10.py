@@ -11,6 +11,8 @@ import torch.nn.functional as F
 import torch.optim as optim
 from torchvision import datasets, transforms
 
+from resnet_cifar import resnet18
+
 import ast
 import numpy as np
 import random
@@ -141,8 +143,8 @@ for i in backdoor_indexes:
 
 train_loader = torch.utils.data.DataLoader(train_dataset, **train_kwargs)
 test_loader = torch.utils.data.DataLoader(test_dataset, **test_kwargs)
-'''
-model = CIFAR10Net().to(device)
+
+model = resnet18().to(device)
 
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 num_of_epochs = 20
@@ -152,9 +154,9 @@ for epoch in range(num_of_epochs):
     train(model, train_loader, nn.CrossEntropyLoss(), optimizer, device)
     test(model, test_loader, nn.CrossEntropyLoss(), device)
 
-save_model(model, 'cifar10_bd.pt')
-'''
-model = load_model(CIFAR10Net, 'cifar10_bd.pt')
+save_model(model, 'cifar10_trojaning_bd.pt')
+
+model = load_model(resnet18, 'cifar10_trojaning_bd.pt')
 model.to(device)
 # Modify test data to test backdoor accuracy
 backdoor_test_dataset = datasets.CIFAR10('../data', train=False, transform=transform)

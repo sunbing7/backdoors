@@ -15,6 +15,8 @@ import ast
 import numpy as np
 import random
 
+from resnet_cifar import resnet18
+
 class CIFAR10Net(nn.Module):
     # from https://www.kaggle.com/code/shadabhussain/cifar-10-cnn-using-pytorch
     def __init__(self):
@@ -141,19 +143,19 @@ for i in backdoor_indexes:
 train_loader = torch.utils.data.DataLoader(train_dataset, **train_kwargs)
 test_loader = torch.utils.data.DataLoader(test_dataset, **test_kwargs)
 
-model = CIFAR10Net().to(device)
+model = resnet18().to(device)
 
 optimizer = optim.Adam(model.parameters(), lr=0.001)
-num_of_epochs = 20
+num_of_epochs = 200
 
-#for epoch in range(num_of_epochs):
-#    print('\n------------- Epoch {} -------------\n'.format(epoch))
-#    train(model, train_loader, nn.CrossEntropyLoss(), optimizer, device)
-#    test(model, test_loader, nn.CrossEntropyLoss(), device)
+for epoch in range(num_of_epochs):
+    print('\n------------- Epoch {} -------------\n'.format(epoch))
+    train(model, train_loader, nn.CrossEntropyLoss(), optimizer, device)
+    test(model, test_loader, nn.CrossEntropyLoss(), device)
 
-#save_model(model, 'cifar10_bd.pt')
+save_model(model, 'cifar10_trojannet_bd.pt')
 
-model = load_model(CIFAR10Net, 'cifar10_bd.pt')
+model = load_model(resnet18, 'cifar10_trojannet_bd.pt')
 model.to(device)
 # Modify test data to test backdoor accuracy
 backdoor_test_dataset = datasets.CIFAR10('../data', train=False, transform=transform)

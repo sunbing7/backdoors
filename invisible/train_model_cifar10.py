@@ -150,7 +150,7 @@ for epoch in range(num_of_epochs):
 
 save_model(model, 'cifar10_resnet18_bd.pt')
 
-model = load_model(CIFAR10Net, 'cifar10_resnet18_bd.pt')
+model = load_model(resnet18, 'cifar10_resnet18_bd.pt')
 model.to(device)
 # Modify test data to test backdoor accuracy
 backdoor_test_dataset = datasets.CIFAR10('../data', train=False, transform=transform)
