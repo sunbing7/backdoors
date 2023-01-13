@@ -74,6 +74,7 @@ def test(model, dataloader, loss_fn, device):
     num_batches = len(dataloader)
     
     model.eval()
+    model.to(device)
     loss, correct = 0.0, 0
     
     with torch.no_grad():
