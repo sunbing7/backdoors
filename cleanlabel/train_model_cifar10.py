@@ -78,10 +78,10 @@ class CIFAR10CLB(Dataset):
         super(CIFAR10CLB, self).__init__()
         if train:
             self.data = np.load(os.path.join(root, 'train_images.npy')).astype(np.uint8)
-            self.targets = np.load(os.path.join(root, 'train_labels.npy')).astype(np.uint8)
+            self.targets = np.load(os.path.join(root, 'train_labels.npy')).astype(np.int_)
         else:
             self.data = np.load(os.path.join(root, 'test_images.npy')).astype(np.uint8)
-            self.targets = np.load(os.path.join(root, 'test_labels.npy')).astype(np.uint8)
+            self.targets = np.load(os.path.join(root, 'test_labels.npy')).astype(np.int_)
 
         self.transform = transform
         self.target_transform = target_transform
