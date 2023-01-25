@@ -121,7 +121,7 @@ test_clean_loader = torch.utils.data.DataLoader(test_clean_dataset, **test_kwarg
 model = resnet18().to(device)
 
 optimizer = optim.Adam(model.parameters(), lr=0.001)
-num_of_epochs = 5
+num_of_epochs = 200
 
 for epoch in range(num_of_epochs):
     print('\n------------- Epoch {} -------------\n'.format(epoch))

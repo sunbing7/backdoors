@@ -148,9 +148,9 @@ for epoch in range(num_of_epochs):
     train(model, train_loader, nn.CrossEntropyLoss(), optimizer, device)
     test(model, test_loader, nn.CrossEntropyLoss(), device)
 
-save_model(model, 'cifar10_resnet18_bd.pt')
+save_model(model, 'cifar10_resnet18_invisible_bd.pt')
 '''
-model = load_model(resnet18, 'cifar10_resnet18_bd.pt')
+model = load_model(resnet18, 'cifar10_resnet18_invisible_bd.pt')
 model.to(device)
 # Modify test data to test backdoor accuracy
 backdoor_test_dataset = datasets.CIFAR10('../data', train=False, transform=transform)
