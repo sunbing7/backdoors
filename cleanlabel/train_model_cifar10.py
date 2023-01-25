@@ -79,10 +79,11 @@ class CIFAR10CLB(Dataset):
         if train:
             self.data = np.load(os.path.join(root, 'train_images.npy')).astype(np.uint8)
             self.targets = np.load(os.path.join(root, 'train_labels.npy')).astype(np.int_)
+            print('training set len:{}'.format(len(self.targets)))
         else:
             self.data = np.load(os.path.join(root, 'test_images.npy')).astype(np.uint8)
             self.targets = np.load(os.path.join(root, 'test_labels.npy')).astype(np.int_)
-
+            print('test set len:{}'.format(len(self.targets)))
         self.transform = transform
         self.target_transform = target_transform
 
@@ -115,6 +116,7 @@ test_dataset = CIFAR10CLB('poisoned_dir', train=False, transform=transform, targ
 
 train_loader = torch.utils.data.DataLoader(train_dataset, **train_kwargs)
 test_loader = torch.utils.data.DataLoader(test_dataset, **test_kwargs)
+test_clean_loader = torch.utils.data.DataLoader(test_clean_dataset, **test_kwargs)
 
 model = resnet18().to(device)
 
@@ -124,6 +126,7 @@ num_of_epochs = 5
 for epoch in range(num_of_epochs):
     print('\n------------- Epoch {} -------------\n'.format(epoch))
     train(model, train_loader, nn.CrossEntropyLoss(), optimizer, device)
+    test(model, test_clean_loader, nn.CrossEntropyLoss(), device)
     test(model, test_loader, nn.CrossEntropyLoss(), device)
 
 save_model(model, 'cifar10_resnet18_clb_bd.pt')
